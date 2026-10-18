@@ -1,0 +1,29 @@
+{
+  "slug": "nicky",
+  "firstName": "Nicky",
+  "lastName": "Stokes",
+  "fullName": "Nicky Stokes",
+  "jobTitle": "Managing Director",
+  "company": "Integrated Security Design Ltd",
+  "mobile": "+44 7919 897800",
+  "mobileDial": "+447919897800",
+  "email": "nstokes@isd-tech.com",
+  "website": "https://www.isd-tech.com",
+  "websiteLabel": "isd-tech.com",
+  "linkedin": "https://www.linkedin.com/in/nicky-stokes-2ba06510/",
+  "linkedinLabel": "linkedin.com/in/nicky-stokes-2ba06510",
+  "address": {
+    "building": "Shield House, Ground Floor",
+    "street": "294 High Street",
+    "city": "Aldershot",
+    "postcode": "GU12 4LT",
+    "country": "United Kingdom",
+    "formatted": "Integrated Security Design Ltd\nShield House, Ground Floor\n294 High Street, Aldershot, GU12 4LT",
+    "mapsQuery": "Integrated+Security+Design+Ltd,+Shield+House,+294+High+Street,+Aldershot,+GU12+4LT"
+  },
+  "photoCutout": "/images/nicky-stokes-cutout.png",
+  "photoOriginal": "/images/nicky-stokes-original.jpg",
+  "photoVcf": "/images/nicky-stokes-vcf.jpg",
+  "vcfPath": "/vcf/nicky-stokes.vcf",
+  "cardUrl": "https://isd-tech.com/vcard/nicky"
+}
