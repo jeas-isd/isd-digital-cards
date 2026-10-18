@@ -9,13 +9,14 @@ Mobile-optimised digital business card platform for **Integrated Security Design
 - **Name:** Nicky Stokes
 - **Job Title:** Managing Director
 - **Company:** Integrated Security Design Ltd
+- **Live URL:** [cards.isd-tech.com/nstokes](https://cards.isd-tech.com/nstokes)
 - **Mobile:** `+44 7919 897800`
 - **Email:** `nstokes@isd-tech.com`
 - **Website:** [isd-tech.com](https://www.isd-tech.com)
 - **LinkedIn:** [linkedin.com/in/nicky-stokes-2ba06510](https://www.linkedin.com/in/nicky-stokes-2ba06510/)
 - **Office Address:** Integrated Security Design Ltd, Shield House, Ground Floor, 294 High Street, Aldershot, GU12 4LT
 - **Portrait Cutout:** `public/images/nicky-stokes-cutout.png` (AI background-segmented cutout from original photo)
-- **1-Tap vCard:** `public/vcf/nicky-stokes.vcf` (vCard 3.0 with embedded JPEG photo for iOS & Android Contacts)
+- **1-Tap vCard:** `public/vcf/nstokes.vcf` (vCard 3.0 with embedded JPEG photo for iOS & Android Contacts)
 
 ---
 
@@ -23,21 +24,22 @@ Mobile-optimised digital business card platform for **Integrated Security Design
 
 ```text
 isd-digital-cards/
-├── index.html                        # Standalone mobile micro-site for Nicky Stokes
 ├── content/
 │   └── cards/
-│       └── nicky.json                # Structured contact record (managed by Keystatic CMS)
+│       └── nstokes.json              # Structured contact record (managed by Keystatic CMS)
+├── keystatic/                        # Keystatic CMS React SPA source
 ├── keystatic.config.ts               # Keystatic CMS schema for non-tech editing at /keystatic
 ├── public/
 │   ├── images/
 │   │   ├── nicky-stokes-cutout.png   # Transparent cutout portrait
 │   │   ├── nicky-stokes-original.jpg # Cropped square original photo
 │   │   ├── nicky-stokes-vcf.jpg      # Navy-backed portrait embedded inside the .vcf
-│   │   └── nicky-qr.png              # QR code pointing to isd-tech.com/vcard/nicky
+│   │   └── nicky-qr.png              # QR code pointing to cards.isd-tech.com/nstokes
 │   └── vcf/
-│       └── nicky-stokes.vcf          # Pre-built vCard 3.0 file for 1-tap phone import
+│       └── nstokes.vcf               # Pre-built vCard 3.0 file for 1-tap phone import
 └── scripts/
-    └── build_cards.py                # Auto-generates .vcf files from content/cards/*.json
+    ├── card_template.html            # Responsive digital business card template
+    └── build_cards.py                # Multi-staff card generator & Keystatic builder
 ```
 
 ---
