@@ -4,11 +4,7 @@ export default config({
   storage:
     process.env.NODE_ENV === 'production'
       ? {
-          kind: 'github',
-          repo: {
-            owner: 'jeas-isd',
-            name: 'isd-digital-cards',
-          },
+          kind: 'cloud',
         }
       : {
           kind: 'local',
