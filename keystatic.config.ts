@@ -1,11 +1,18 @@
 import { config, fields, collection } from '@keystatic/core';
 
 export default config({
-  storage: {
-    // Uses 'local' in development and 'github' (or Keystatic Cloud) in production
-    // so non-technical staff can log in via browser and edit cards without touching code.
-    kind: process.env.NODE_ENV === 'production' ? 'cloud' : 'local',
-  },
+  storage:
+    process.env.NODE_ENV === 'production'
+      ? {
+          kind: 'github',
+          repo: {
+            owner: 'jeas-isd',
+            name: 'isd-digital-cards',
+          },
+        }
+      : {
+          kind: 'local',
+        },
   cloud: {
     project: 'isd-tech/digital-cards',
   },
@@ -23,7 +30,7 @@ export default config({
       schema: {
         slug: fields.slug({
           name: {
-            label: 'URL Slug (e.g. nicky -> isd-tech.com/vcard/nicky)',
+            label: 'URL Slug (e.g. nstokes -> cards.isd-tech.com/nstokes)',
             validation: { isRequired: true },
           },
         }),

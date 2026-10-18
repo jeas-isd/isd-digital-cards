@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>__FULL_NAME__ — __JOB_TITLE__ | __COMPANY__</title>
+  <meta name="description" content="Digital Business Card for __FULL_NAME__, __JOB_TITLE__ at __COMPANY__ (ISD Tech)." />
+  <meta property="og:title" content="__FULL_NAME__ — __JOB_TITLE__ | ISD Tech" />
+  <meta property="og:description" content="Save __FULL_NAME__'s contact details directly to your phone." />
+  <meta property="og:type" content="profile" />
+  <meta property="og:url" content="__CARD_URL__" />
+  <meta name="theme-color" content="#012250" />
+  <link rel="icon" href="https://isd-tech.com/wp-content/uploads/2021/03/cropped-favicon-32x32.png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="https://isd-tech.com/wp-content/uploads/2021/03/cropped-favicon-180x180.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --isd-navy-deep: #001533;
+      --isd-navy: #012250;
+      --isd-blue: #003985;
+      --isd-cyan: #01c3ff;
+      --isd-orange: #f7941e;
+      --isd-orange-hover: #e6830d;
+      --card-bg: #ffffff;
+      --surface-muted: #f4f7fb;
+      --border-subtle: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --linkedin-blue: #0a66c2;
+      --shadow-card: 0 24px 60px -12px rgba(1, 34, 80, 0.45), 0 0 1px 1px rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #003985 0%, #012250 55%, #00122b 100%);
+      color: var(--text-primary);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 16px 14px 36px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Subtle geometric security grid overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(1, 195, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(1, 195, 255, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .card-shell {
+      width: 100%;
+      max-width: 430px;
+      background: var(--card-bg);
+      border-radius: 28px;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      animation: cardEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes cardEnter {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Hero Banner */
+    .card-hero {
+      background: linear-gradient(145deg, #012250 0%, #003985 65%, #004da8 100%);
+      padding: 22px 22px 76px;
+      position: relative;
+      overflow: hidden;
+      color: #ffffff;
+    }
+
+    /* Decorative security shield geometric accents */
+    .card-hero::after {
+      content: "";
+      position: absolute;
+      right: -45px;
+      top: -45px;
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(1, 195, 255, 0.22) 0%, rgba(1, 195, 255, 0) 70%);
+      pointer-events: none;
+    }
+
+    .hero-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand-logo-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.96);
+      padding: 7px 13px;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+    }
+
+    .brand-logo-wrap img {
+      height: 28px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-logo-fallback {
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      color: var(--isd-navy);
+      display: none;
+    }
+
+    .qr-trigger-btn {
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: #ffffff;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s ease;
+    }
+
+    .qr-trigger-btn:hover,
+    .qr-trigger-btn:active {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    /* Profile Cutout Avatar Section */
+    .profile-header {
+      margin-top: -58px;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 3;
+    }
+
+    .avatar-ring {
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(135deg, var(--isd-cyan) 0%, #ffffff 50%, var(--isd-orange) 100%);
+      box-shadow: 0 12px 28px rgba(1, 34, 80, 0.28);
+      position: relative;
+    }
+
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      /* WebKit circular clipping bug fix for iOS Safari & Mobile browsers */
+      -webkit-mask-image: -webkit-radial-gradient(white, black);
+      mask-image: radial-gradient(circle, #ffffff 100%, transparent 100%);
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      isolation: isolate;
+      /* Studio radial backdrop behind the transparent cutout */
+      background: radial-gradient(circle at 50% 32%, #0c4a9e 0%, #012250 78%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .avatar-inner img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+
+    .verified-badge {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--isd-cyan);
+      color: var(--isd-navy-deep);
+      border: 3px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+      z-index: 2;
+    }
+
+    .profile-name {
+      margin-top: 14px;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+      line-height: 1.15;
+    }
+
+    .profile-role {
+      margin-top: 4px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--isd-blue);
+    }
+
+    .profile-company {
+      margin-top: 3px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* Prominent Primary CTA: Save Contact (.vcf) */
+    .cta-section {
+      padding: 20px 22px 14px;
+    }
+
+    .btn-save-contact {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--isd-orange) 0%, #ff7b00 100%);
+      color: #ffffff;
+      font-size: 16.5px;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 24px -4px rgba(247, 148, 30, 0.55);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .btn-save-contact:hover,
+    .btn-save-contact:active {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px -4px rgba(247, 148, 30, 0.68);
+    }
+
+    .cta-subtext {
+      text-align: center;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 7px;
+    }
+
+    /* Quick Action Strip */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 6px 22px 18px;
+    }
+
+    .quick-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px 6px;
+      border-radius: 14px;
+      background: var(--surface-muted);
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 11.5px;
+      font-weight: 600;
+      transition: all 0.18s ease;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .quick-btn svg {
+      width: 20px;
+      height: 20px;
+      color: var(--isd-navy);
+      transition: transform 0.18s ease;
+    }
+
+    .quick-btn.linkedin svg {
+      color: var(--linkedin-blue);
+    }
+
+    .quick-btn:hover,
+    .quick-btn:active {
+      background: #e9eff7;
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+
+    .quick-btn:active svg {
+      transform: scale(0.95);
+    }
+
+    /* Detailed Contact List */
+    .details-list {
+      padding: 0 22px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.18s ease;
+    }
+
+    .detail-item:hover,
+    .detail-item:active {
+      background: var(--surface-muted);
+      border-color: #cbd5e1;
+      transform: translateX(2px);
+    }
+
+    .detail-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(1, 34, 80, 0.06);
+      color: var(--isd-navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .detail-icon.linkedin-bg {
+      background: rgba(10, 102, 194, 0.1);
+      color: var(--linkedin-blue);
+    }
+
+    .detail-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .detail-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .detail-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .detail-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      line-height: 1.35;
+    }
+
+    .detail-arrow {
+      color: #94a3b8;
+      flex-shrink: 0;
+    }
+
+    /* Card Footer */
+    .card-footer {
+      padding: 14px 22px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 11.5px;
+      color: var(--text-muted);
+      background: #fafcff;
+    }
+
+    .share-card-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .share-card-btn:hover,
+    .share-card-btn:active {
+      background: var(--surface-muted);
+      color: var(--isd-navy);
+    }
+
+    /* Modal Styling */
+    .qr-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 18, 43, 0.72);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .qr-modal-backdrop.open {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .qr-modal {
+      width: 100%;
+      max-width: 320px;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 26px 22px 20px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .qr-modal h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--isd-navy);
+      letter-spacing: -0.02em;
+    }
+
+    .qr-modal p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .qr-box {
+      margin: 18px 0 14px;
+      padding: 12px;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 6px 18px rgba(1, 34, 80, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-box img {
+      width: 200px;
+      height: 200px;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .qr-close-btn {
+      margin-top: 8px;
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      background: var(--isd-navy);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="card-shell">
+    <!-- Top Brand Banner -->
+    <header class="card-hero">
+      <div class="hero-topbar">
+        <a href="https://www.isd-tech.com" target="_blank" rel="noopener" class="brand-logo-wrap" aria-label="Integrated Security Design Ltd Website">
+          <img
+            src="https://isd-tech.com/wp-content/uploads/2021/05/logo.png"
+            alt="Integrated Security Design Ltd"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"
+          />
+          <span class="brand-logo-fallback">ISD TECH</span>
+        </a>
+
+        <button type="button" class="qr-trigger-btn" id="openQrBtn" aria-label="Show QR Code">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Cutout Portrait + Identity -->
+    <section class="profile-header">
+      <div class="avatar-ring">
+        <div class="avatar-inner">
+          <img src="__PHOTO_CUTOUT__" id="profileAvatar" alt="__FULL_NAME__" />
+        </div>
+        <div class="verified-badge" title="Verified ISD Tech Contact">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="profile-name" id="fullName">__FULL_NAME__</h1>
+      <p class="profile-role" id="jobTitle">__JOB_TITLE__</p>
+      <p class="profile-company" id="companyName">__COMPANY__</p>
+    </section>
+
+    <!-- Primary 1-Tap Save Contact (.vcf) Button -->
+    <section class="cta-section">
+      <a href="__VCF_PATH__" download="__VCF_DOWNLOAD__" class="btn-save-contact" id="saveContactBtn">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <line x1="19" y1="8" x2="19" y2="14"></line>
+          <line x1="22" y1="11" x2="16" y2="11"></line>
+        </svg>
+        <span>Save Contact</span>
+      </a>
+      <p class="cta-subtext">1-tap import to iPhone &amp; Android Contacts</p>
+    </section>
+
+    <!-- Quick Action Buttons -->
+    <nav class="quick-actions" aria-label="Quick Contact Actions">
+      <a href="tel:__MOBILE_DIAL__" class="quick-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+        <span>Call</span>
+      </a>
+
+      <a href="mailto:__EMAIL__" class="quick-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+        <span>Email</span>
+      </a>
+
+      <a href="__LINKEDIN__" target="_blank" rel="noopener" class="quick-btn linkedin">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path>
+        </svg>
+        <span>LinkedIn</span>
+      </a>
+
+      <a href="__WEBSITE__" target="_blank" rel="noopener" class="quick-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+        <span>Website</span>
+      </a>
+    </nav>
+
+    <!-- Full Contact Information Cards -->
+    <section class="details-list" aria-label="Contact Details">
+      <!-- Mobile -->
+      <a href="tel:__MOBILE_DIAL__" class="detail-item">
+        <div class="detail-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          </svg>
+        </div>
+        <div class="detail-content">
+          <div class="detail-label">Mobile</div>
+          <div class="detail-value">__MOBILE__</div>
+        </div>
+        <div class="detail-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Email -->
+      <a href="mailto:__EMAIL__" class="detail-item">
+        <div class="detail-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+        </div>
+        <div class="detail-content">
+          <div class="detail-label">Email</div>
+          <div class="detail-value">__EMAIL__</div>
+        </div>
+        <div class="detail-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </a>
+
+      <!-- LinkedIn -->
+      <a href="__LINKEDIN__" target="_blank" rel="noopener" class="detail-item">
+        <div class="detail-icon linkedin-bg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path>
+          </svg>
+        </div>
+        <div class="detail-content">
+          <div class="detail-label">LinkedIn</div>
+          <div class="detail-value">__LINKEDIN_LABEL__</div>
+        </div>
+        <div class="detail-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Website -->
+      <a href="__WEBSITE__" target="_blank" rel="noopener" class="detail-item">
+        <div class="detail-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </div>
+        <div class="detail-content">
+          <div class="detail-label">Website</div>
+          <div class="detail-value">__WEBSITE_LABEL__</div>
+        </div>
+        <div class="detail-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Office Address -->
+      <a href="https://maps.google.com/?q=__MAPS_QUERY__" target="_blank" rel="noopener" class="detail-item">
+        <div class="detail-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+        </div>
+        <div class="detail-content">
+          <div class="detail-label">Office Address</div>
+          <div class="detail-value">__COMPANY__</div>
+          <div class="detail-sub">
+            __ADDRESS_HTML__
+          </div>
+        </div>
+        <div class="detail-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </a>
+    </section>
+
+    <footer class="card-footer">
+      <span>&copy; __COMPANY__</span>
+      <button type="button" class="share-card-btn" id="shareCardBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+        <span>Share Card</span>
+      </button>
+    </footer>
+  </main>
+
+  <!-- "Flash Your Phone" QR Code Modal -->
+  <div class="qr-modal-backdrop" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle">
+    <div class="qr-modal">
+      <h3 id="qrModalTitle">__FULL_NAME__</h3>
+      <p>Scan to open digital card &amp; save contact</p>
+      <div class="qr-box">
+        <img src="__QR_IMG_SRC__" alt="QR Code for __FULL_NAME__ Digital Business Card" />
+      </div>
+      <p style="font-size: 11.5px; color: #64748b;">__DISPLAY_URL__</p>
+      <button type="button" class="qr-close-btn" id="closeQrBtn">Done</button>
+    </div>
+  </div>
+
+  <script>
+    const qrModal = document.getElementById('qrModal');
+    const openQrBtn = document.getElementById('openQrBtn');
+    const closeQrBtn = document.getElementById('closeQrBtn');
+    const shareCardBtn = document.getElementById('shareCardBtn');
+
+    openQrBtn.addEventListener('click', () => qrModal.classList.add('open'));
+    closeQrBtn.addEventListener('click', () => qrModal.classList.remove('open'));
+    qrModal.addEventListener('click', (e) => {
+      if (e.target === qrModal) qrModal.classList.remove('open');
+    });
+
+    shareCardBtn.addEventListener('click', async () => {
+      const shareData = {
+        title: '__FULL_NAME__ — __JOB_TITLE__ | ISD Tech',
+        text: 'Contact details for __FULL_NAME__ at __COMPANY__',
+        url: window.location.href,
+      };
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch (_) {}
+      } else {
+        qrModal.classList.add('open');
+      }
+    });
+  </script>
+</body>
+</html>

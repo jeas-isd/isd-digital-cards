@@ -1,16 +1,29 @@
 [build]
-  command = "python3 scripts/build_cards.py && mkdir -p dist && cp index.html dist/ && cp -r public dist/ && cp -r public/* dist/"
+  command = "python3 scripts/build_cards.py"
   publish = "dist"
 
+# Keystatic SPA client-side routing
+[[redirects]]
+  from = "/keystatic/*"
+  to = "/keystatic/index.html"
+  status = 200
+
+# Legacy path redirects to /nstokes
 [[redirects]]
   from = "/vcard/nicky"
-  to = "/"
-  status = 200
+  to = "/nstokes"
+  status = 301
 
 [[redirects]]
   from = "/nicky"
-  to = "/"
-  status = 200
+  to = "/nstokes"
+  status = 301
+
+# Root redirects to primary card /nstokes
+[[redirects]]
+  from = "/"
+  to = "/nstokes"
+  status = 302
 
 [[headers]]
   for = "/*"

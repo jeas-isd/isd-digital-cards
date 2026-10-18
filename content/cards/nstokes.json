@@ -1,5 +1,5 @@
 {
-  "slug": "nicky",
+  "slug": "nstokes",
   "firstName": "Nicky",
   "lastName": "Stokes",
   "fullName": "Nicky Stokes",
@@ -24,6 +24,6 @@
   "photoCutout": "/images/nicky-stokes-cutout.png",
   "photoOriginal": "/images/nicky-stokes-original.jpg",
   "photoVcf": "/images/nicky-stokes-vcf.jpg",
-  "vcfPath": "/vcf/nicky-stokes.vcf",
-  "cardUrl": "https://isd-tech.com/vcard/nicky"
+  "vcfPath": "/public/vcf/nstokes.vcf",
+  "cardUrl": "https://cards.isd-tech.com/nstokes"
 }
