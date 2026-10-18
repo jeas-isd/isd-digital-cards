@@ -1,0 +1,26 @@
+[build]
+  command = "python3 scripts/build_cards.py"
+  publish = "."
+
+[[redirects]]
+  from = "/vcard/nicky"
+  to = "/"
+  status = 200
+
+[[redirects]]
+  from = "/nicky"
+  to = "/"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/public/vcf/*"
+  [headers.values]
+    Content-Type = "text/vcard; charset=utf-8"
+    Content-Disposition = "attachment"

@@ -6,7 +6,7 @@
   "scripts": {
     "build:vcf": "python3 scripts/build_cards.py",
     "dev": "astro dev",
-    "build": "python3 scripts/build_cards.py && astro build",
+    "build": "python3 scripts/build_cards.py",
     "preview": "astro preview"
   },
   "dependencies": {
