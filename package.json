@@ -6,7 +6,7 @@
   "scripts": {
     "build:vcf": "python3 scripts/build_cards.py",
     "dev": "astro dev",
-    "build": "python3 scripts/build_cards.py",
+    "build": "python3 scripts/build_cards.py && mkdir -p dist && cp index.html dist/ && cp -r public dist/ && cp -r public/* dist/",
     "preview": "astro preview"
   },
   "dependencies": {
