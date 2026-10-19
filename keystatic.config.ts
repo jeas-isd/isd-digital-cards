@@ -10,7 +10,7 @@ export default config({
           kind: 'local',
         },
   cloud: {
-    project: 'isd-tech/digital-cards',
+    project: 'isd-tech-com/isd-digital-cards',
   },
   ui: {
     brand: {
