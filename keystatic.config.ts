@@ -89,6 +89,8 @@ export default config({
         }),
         photoCutout: fields.image({
           label: 'Profile Picture (Cutout PNG or Portrait)',
+          description:
+            'Upload a transparent cutout PNG or portrait JPG. Automatically optimized and downscaled at build time.',
           directory: 'public/images',
           publicPath: '/images/',
         }),

@@ -5,12 +5,20 @@ from Keystatic JSON files located in content/cards/*.json.
 """
 import base64
 import html
+import io
 import json
 import shutil
 import subprocess
 import sys
 import urllib.parse
 from pathlib import Path
+
+try:
+    from PIL import Image
+    HAS_PILLOW = True
+except ImportError:
+    HAS_PILLOW = False
+
 
 ROOT = Path(__file__).resolve().parent.parent
 CARDS_DIR = ROOT / "content" / "cards"
@@ -31,6 +39,32 @@ def fold_vcard_line(line: str, width: int = 75) -> str:
         chunks.append(" " + rest[: width - 1])
         rest = rest[width - 1 :]
     return "\r\n".join(chunks)
+
+
+def generate_vcf_photo_base64(photo_path: Path, max_size: int = 200, quality: int = 75) -> str:
+    """Produce an ultra-compact JPEG thumbnail base64 string for fast, reliable vCard loading."""
+    if not HAS_PILLOW:
+        return base64.b64encode(photo_path.read_bytes()).decode("ascii")
+
+    try:
+        with Image.open(photo_path) as img:
+            # Composite transparent PNGs onto a clean white background
+            if img.mode in ("RGBA", "LA", "P"):
+                bg = Image.new("RGB", img.size, (255, 255, 255))
+                if img.mode == "P":
+                    img = img.convert("RGBA")
+                bg.paste(img, mask=img.split()[-1] if "A" in img.mode else None)
+                img = bg
+            elif img.mode != "RGB":
+                img = img.convert("RGB")
+
+            img.thumbnail((max_size, max_size), Image.Resampling.LANCZOS)
+            buf = io.BytesIO()
+            img.save(buf, format="JPEG", quality=quality, optimize=True)
+            return base64.b64encode(buf.getvalue()).decode("ascii")
+    except Exception as e:
+        print(f"Warning: Failed to create vCard thumbnail for {photo_path}: {e}")
+        return base64.b64encode(photo_path.read_bytes()).decode("ascii")
 
 
 def generate_vcf(card: dict) -> str:
@@ -74,12 +108,13 @@ def generate_vcf(card: dict) -> str:
     if not photo_path.exists():
         photo_path = ROOT / photo_rel
     if photo_path.exists():
-        b64_photo = base64.b64encode(photo_path.read_bytes()).decode("ascii")
+        b64_photo = generate_vcf_photo_base64(photo_path)
         photo_line = f"PHOTO;ENCODING=b;TYPE=JPEG:{b64_photo}"
         lines.append(fold_vcard_line(photo_line))
 
     lines.append("END:VCARD")
     return "\r\n".join(lines) + "\r\n"
+
 
 
 def render_card_html(template: str, card: dict) -> str:
@@ -222,6 +257,40 @@ def build_keystatic():
         (DIST_DIR / "_redirects").write_text(redirects_content, encoding="utf-8")
 
 
+def optimize_dist_images(max_dimension: int = 640):
+    """Downscale large uploaded images in dist/ so mobile visitors don't download multi-MB assets."""
+    if not HAS_PILLOW:
+        print("Pillow not installed, skipping build-time image downscaling.")
+        return
+
+    # Check both dist/images and dist/public/images
+    for img_dir in [DIST_DIR / "images", DIST_DIR / "public" / "images"]:
+        if not img_dir.exists():
+            continue
+        for img_path in img_dir.glob("*"):
+            if img_path.suffix.lower() not in (".jpg", ".jpeg", ".png", ".webp"):
+                continue
+            # Skip QR codes or site logos
+            if "qr" in img_path.stem.lower() or "logo" in img_path.stem.lower():
+                continue
+            try:
+                with Image.open(img_path) as img:
+                    orig_w, orig_h = img.size
+                    if orig_w <= max_dimension and orig_h <= max_dimension:
+                        continue
+                    img.thumbnail((max_dimension, max_dimension), Image.Resampling.LANCZOS)
+                    fmt = img.format or ("PNG" if img_path.suffix.lower() == ".png" else "JPEG")
+                    if fmt.upper() == "PNG":
+                        img.save(img_path, format="PNG", optimize=True)
+                    else:
+                        if img.mode in ("RGBA", "P"):
+                            img = img.convert("RGB")
+                        img.save(img_path, format="JPEG", quality=85, optimize=True)
+                    print(f"Downscaled web image {img_path.name}: {orig_w}x{orig_h} -> {img.size[0]}x{img.size[1]}")
+            except Exception as e:
+                print(f"Warning: Could not optimize {img_path.name}: {e}")
+
+
 def main():
     template = TEMPLATE_FILE.read_text(encoding="utf-8")
     DIST_DIR.mkdir(parents=True, exist_ok=True)
@@ -288,8 +357,12 @@ def main():
                 shutil.copy2(item, target)
         print("Copied public assets into dist/ and dist/public/.")
 
+    # 5.5 Optimize large images for fast mobile loading
+    optimize_dist_images(max_dimension=640)
+
     # 6. Build Keystatic Admin SPA into dist/keystatic
     build_keystatic()
+
 
     print("Build complete! All cards and Keystatic CMS are packaged in dist/.")
 
