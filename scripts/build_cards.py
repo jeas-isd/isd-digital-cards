@@ -192,10 +192,10 @@ def build_keystatic():
         print("Keystatic build error:", res.stderr)
     else:
         print("Keystatic CMS built successfully to dist/keystatic/.")
-        # Ensure physical index.html exists at the oauth callback path for guaranteed Netlify 200
-        oauth_callback_dir = DIST_DIR / "keystatic" / "cloud" / "oauth" / "callback"
-        oauth_callback_dir.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(DIST_DIR / "keystatic" / "index.html", oauth_callback_dir / "index.html")
+        # Clean up any legacy physical cloud directory if present so Netlify SPA rewrite handles it cleanly
+        cloud_dir = DIST_DIR / "keystatic" / "cloud"
+        if cloud_dir.exists():
+            shutil.rmtree(cloud_dir)
 
         # Also generate canonical dist/_redirects for Netlify
         redirects_content = """# Keystatic SPA client-side routing
