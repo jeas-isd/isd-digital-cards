@@ -9,6 +9,7 @@ import json
 import shutil
 import subprocess
 import sys
+import urllib.parse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -109,8 +110,8 @@ def render_card_html(template: str, card: dict) -> str:
     vcf_path = f"/public/vcf/{slug}.vcf"
     vcf_download = f"{first_name}-{last_name}.vcf"
 
-    card_url = f"https://cards.isd-tech.com/{slug}"
-    display_url = f"cards.isd-tech.com/{slug}"
+    card_url = card.get("cardUrl", f"https://cards.isd-tech.com/{slug}")
+    display_url = card.get("displayUrl", card_url.replace("https://", "").replace("http://", "").rstrip("/"))
 
     # QR code: use custom image if it exists in public/images, otherwise high-res API
     qr_custom_path = PUBLIC_DIR / "images" / f"{slug}-qr.png"
@@ -119,7 +120,8 @@ def render_card_html(template: str, card: dict) -> str:
     elif slug == "nstokes" and (PUBLIC_DIR / "images" / "nicky-qr.png").exists():
         qr_img_src = "/public/images/nicky-qr.png"
     else:
-        qr_img_src = f"https://api.qrserver.com/v1/create-qr-code/?size=300x300&amp;margin=10&amp;data=https%3A%2F%2Fcards.isd-tech.com%2F{slug}"
+        encoded_url = urllib.parse.quote(card_url, safe="")
+        qr_img_src = f"https://api.qrserver.com/v1/create-qr-code/?size=620x620&amp;margin=10&amp;color=012250&amp;bgcolor=ffffff&amp;data={encoded_url}"
 
     replacements = {
         "__FULL_NAME__": full_name,

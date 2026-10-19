@@ -5,9 +5,9 @@
   "description": "Self-hosted mobile digital business cards for Integrated Security Design Ltd (ISD Tech) with Keystatic CMS",
   "scripts": {
     "build:vcf": "python3 scripts/build_cards.py",
-    "dev": "astro dev",
+    "dev": "python3 scripts/build_cards.py && vite dist",
     "build": "python3 scripts/build_cards.py",
-    "preview": "astro preview"
+    "preview": "vite dist"
   },
   "dependencies": {
     "@astrojs/markdoc": "^0.11.0",
