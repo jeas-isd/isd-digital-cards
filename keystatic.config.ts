@@ -1,3 +1,4 @@
+import React from 'react';
 import { config, fields, collection } from '@keystatic/core';
 
 export default config({
@@ -15,6 +16,13 @@ export default config({
   ui: {
     brand: {
       name: 'ISD Tech Digital Cards',
+      mark: () =>
+        React.createElement('img', {
+          src: '/images/isd-logo.png',
+          alt: 'ISD Tech Logo',
+          height: 24,
+          style: { height: '24px', width: 'auto', display: 'block' },
+        }),
     },
   },
   collections: {
