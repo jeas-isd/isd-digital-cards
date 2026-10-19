@@ -190,6 +190,23 @@ def build_keystatic():
         print("Keystatic build error:", res.stderr)
     else:
         print("Keystatic CMS built successfully to dist/keystatic/.")
+        # Ensure physical index.html exists at the oauth callback path for guaranteed Netlify 200
+        oauth_callback_dir = DIST_DIR / "keystatic" / "cloud" / "oauth" / "callback"
+        oauth_callback_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(DIST_DIR / "keystatic" / "index.html", oauth_callback_dir / "index.html")
+
+        # Also generate canonical dist/_redirects for Netlify
+        redirects_content = """# Keystatic SPA client-side routing
+/keystatic/*    /keystatic/index.html   200
+
+# Legacy path redirects to /nstokes
+/vcard/nicky    /nstokes                301
+/nicky          /nstokes                301
+
+# Root redirects to primary card /nstokes
+/               /nstokes                302
+"""
+        (DIST_DIR / "_redirects").write_text(redirects_content, encoding="utf-8")
 
 
 def main():

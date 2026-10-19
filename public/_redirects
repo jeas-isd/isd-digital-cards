@@ -1,0 +1,9 @@
+# Keystatic SPA client-side routing
+/keystatic/*    /keystatic/index.html   200
+
+# Legacy path redirects to /nstokes
+/vcard/nicky    /nstokes                301
+/nicky          /nstokes                301
+
+# Root redirects to primary card /nstokes
+/               /nstokes                302
