@@ -58,8 +58,19 @@ def generate_vcf(card: dict) -> str:
     ]
 
     # Embed portrait photo in vCard so iOS/Android automatically populate contact photo
-    photo_rel = card.get("photoVcf", "/images/nicky-stokes-vcf.jpg").lstrip("/")
+    slug = card.get("slug", "")
+    custom_vcf_photo = PUBLIC_DIR / "images" / f"{slug}-vcf.jpg"
+    if card.get("photoVcf"):
+        photo_rel = card["photoVcf"].lstrip("/")
+    elif custom_vcf_photo.exists():
+        photo_rel = f"images/{slug}-vcf.jpg"
+    elif card.get("photoCutout"):
+        photo_rel = card["photoCutout"].lstrip("/")
+    else:
+        photo_rel = "images/nicky-stokes-vcf.jpg"
+
     photo_path = PUBLIC_DIR / photo_rel.replace("images/", "images/").replace("public/", "")
+
     if not photo_path.exists():
         photo_path = ROOT / photo_rel
     if photo_path.exists():
