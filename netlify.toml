@@ -1,6 +1,8 @@
 [build]
   command = "python3 scripts/build_cards.py"
   publish = "dist"
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ./content ./scripts ./public ./keystatic ./keystatic.config.ts ./package.json"
+
 
 # Keystatic SPA client-side routing
 [[redirects]]
