@@ -1,0 +1,20 @@
+{
+  "slug": "cstokes",
+  "firstName": "Caroline",
+  "lastName": "Stokes",
+  "fullName": "Caroline Stokes",
+  "jobTitle": "Director",
+  "company": "Integrated Security Design Ltd",
+  "mobile": "+44 07827 931 444",
+  "mobileDial": "+4407827931444",
+  "email": "cstokes@isd-tech.com",
+  "website": "https://www.isd-tech.com",
+  "websiteLabel": "isd-tech.com",
+  "address": {
+    "building": "Shield House, Ground Floor",
+    "street": "294 High Street",
+    "city": "Aldershot",
+    "postcode": "GU12 4LT",
+    "country": "United Kingdom"
+  }
+}
