@@ -1,0 +1,11 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Stokes;Caroline;;;
+FN:Caroline Stokes
+ORG:Integrated Security Design Ltd
+TITLE:Director
+TEL;TYPE=CELL,VOICE,PREF:+44 07827 931 444
+EMAIL;TYPE=INTERNET,WORK,PREF:cstokes@isd-tech.com
+URL;TYPE=WORK:https://www.isd-tech.com
+ADR;TYPE=WORK:;;Shield House, Ground Floor, 294 High Street;Aldershot;;GU12 4LT;United Kingdom
+END:VCARD
