@@ -75,21 +75,37 @@ def generate_vcf(card: dict) -> str:
     postcode = addr.get("postcode", "GU12 4LT")
     country = addr.get("country", "United Kingdom")
 
+    last_name = card.get("lastName", "")
+    first_name = card.get("firstName", "")
+    full_name = card.get("fullName") or f"{first_name} {last_name}".strip()
+    company = card.get("company", "Integrated Security Design Ltd")
+    job_title = card.get("jobTitle", "")
+    mobile = card.get("mobile", "")
+    email = card.get("email", "")
+
     lines = [
         "BEGIN:VCARD",
         "VERSION:3.0",
-        f"N:{card['lastName']};{card['firstName']};;;",
-        f"FN:{card['fullName']}",
-        f"ORG:{card['company']}",
-        f"TITLE:{card['jobTitle']}",
-        f"TEL;TYPE=CELL,VOICE,PREF:{card['mobile']}",
-        f"EMAIL;TYPE=INTERNET,WORK,PREF:{card['email']}",
-        f"URL;TYPE=WORK:{card['website']}",
-        f"ADR;TYPE=WORK:;;{building}, {street};{city};;{postcode};{country}",
-        f"X-SOCIALPROFILE;TYPE=linkedin:{card['linkedin']}",
-        f"ITEM1.URL:{card['linkedin']}",
-        "ITEM1.X-ABLabel:LinkedIn",
+        f"N:{last_name};{first_name};;;",
+        f"FN:{full_name}",
+        f"ORG:{company}",
+        f"TITLE:{job_title}",
+        f"TEL;TYPE=CELL,VOICE,PREF:{mobile}",
+        f"EMAIL;TYPE=INTERNET,WORK,PREF:{email}",
     ]
+
+    website = card.get("website")
+    if website:
+        lines.append(f"URL;TYPE=WORK:{website}")
+
+    adr_parts = ", ".join(filter(None, [building, street]))
+    lines.append(f"ADR;TYPE=WORK:;;{adr_parts};{city};;{postcode};{country}")
+
+    linkedin = card.get("linkedin")
+    if linkedin:
+        lines.append(f"X-SOCIALPROFILE;TYPE=linkedin:{linkedin}")
+        lines.append(f"ITEM1.URL:{linkedin}")
+        lines.append("ITEM1.X-ABLabel:LinkedIn")
 
     # Embed portrait photo in vCard so iOS/Android automatically populate contact photo
     slug = card.get("slug", "")
@@ -100,17 +116,19 @@ def generate_vcf(card: dict) -> str:
         photo_rel = f"images/{slug}-vcf.jpg"
     elif card.get("photoCutout"):
         photo_rel = card["photoCutout"].lstrip("/")
-    else:
+    elif slug == "nstokes":
         photo_rel = "images/nicky-stokes-vcf.jpg"
+    else:
+        photo_rel = ""
 
-    photo_path = PUBLIC_DIR / photo_rel.replace("images/", "images/").replace("public/", "")
-
-    if not photo_path.exists():
-        photo_path = ROOT / photo_rel
-    if photo_path.exists():
-        b64_photo = generate_vcf_photo_base64(photo_path)
-        photo_line = f"PHOTO;ENCODING=b;TYPE=JPEG:{b64_photo}"
-        lines.append(fold_vcard_line(photo_line))
+    if photo_rel:
+        photo_path = PUBLIC_DIR / photo_rel.replace("images/", "images/").replace("public/", "")
+        if not photo_path.exists():
+            photo_path = ROOT / photo_rel
+        if photo_path.exists():
+            b64_photo = generate_vcf_photo_base64(photo_path)
+            photo_line = f"PHOTO;ENCODING=b;TYPE=JPEG:{b64_photo}"
+            lines.append(fold_vcard_line(photo_line))
 
     lines.append("END:VCARD")
     return "\r\n".join(lines) + "\r\n"
@@ -119,14 +137,14 @@ def generate_vcf(card: dict) -> str:
 
 def render_card_html(template: str, card: dict) -> str:
     slug = card["slug"]
-    full_name = html.escape(card["fullName"])
-    first_name = html.escape(card["firstName"])
-    last_name = html.escape(card["lastName"])
-    job_title = html.escape(card["jobTitle"])
-    company = html.escape(card["company"])
-    mobile = html.escape(card["mobile"])
-    mobile_dial = html.escape(card.get("mobileDial", card["mobile"].replace(" ", "")))
-    email = html.escape(card["email"])
+    first_name = html.escape(card.get("firstName", ""))
+    last_name = html.escape(card.get("lastName", ""))
+    full_name = html.escape(card.get("fullName") or f"{first_name} {last_name}".strip())
+    job_title = html.escape(card.get("jobTitle", ""))
+    company = html.escape(card.get("company", "Integrated Security Design Ltd"))
+    mobile = html.escape(card.get("mobile", ""))
+    mobile_dial = html.escape(card.get("mobileDial", card.get("mobile", "").replace(" ", "")))
+    email = html.escape(card.get("email", ""))
     website = card.get("website", "https://www.isd-tech.com")
     website_label = html.escape(card.get("websiteLabel", "isd-tech.com"))
     linkedin = card.get("linkedin", "https://www.linkedin.com/company/integrated-security-design-ltd/")
@@ -147,7 +165,17 @@ def render_card_html(template: str, card: dict) -> str:
     address_html = "<br />\n            ".join(address_lines)
 
     # Photo resolution
-    photo_cutout = card.get("photoCutout", "/images/nicky-stokes-cutout.png")
+    photo_cutout = card.get("photoCutout")
+    if not photo_cutout:
+        if (PUBLIC_DIR / "images" / f"{slug}-cutout.png").exists():
+            photo_cutout = f"/images/{slug}-cutout.png"
+        elif (PUBLIC_DIR / "images" / f"{slug}.jpg").exists():
+            photo_cutout = f"/images/{slug}.jpg"
+        elif slug == "nstokes" and (PUBLIC_DIR / "images" / "nicky-stokes-cutout.png").exists():
+            photo_cutout = "/images/nicky-stokes-cutout.png"
+        else:
+            photo_cutout = "/images/default-avatar.svg"
+
     if not photo_cutout.startswith("/"):
         photo_cutout = "/" + photo_cutout
     photo_cutout_src = f"/public{photo_cutout}" if not photo_cutout.startswith("/public") else photo_cutout
