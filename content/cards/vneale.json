@@ -1,0 +1,20 @@
+{
+  "slug": "vneale",
+  "firstName": "Vanessa",
+  "lastName": "Neale",
+  "fullName": "Vanessa Neale",
+  "jobTitle": "Global Admin Director",
+  "company": "Integrated Security Design Ltd",
+  "mobile": "+44 7584 659958",
+  "mobileDial": "+447584659958",
+  "email": "vneale@isd-tech.com",
+  "website": "https://www.isd-tech.com",
+  "websiteLabel": "isd-tech.com",
+  "address": {
+    "building": "Shield House, Ground Floor",
+    "street": "294 High Street",
+    "city": "Aldershot",
+    "postcode": "GU12 4LT",
+    "country": "United Kingdom"
+  }
+}
