@@ -1,0 +1,21 @@
+{
+  "slug": "mholmes",
+  "firstName": "Marcus",
+  "lastName": "Holmes",
+  "fullName": "Marcus Holmes",
+  "jobTitle": "Engineer",
+  "company": "Integrated Security Design Ltd",
+  "mobile": "+44 7597 492077",
+  "mobileDial": "+7597492077",
+  "email": "mholmes@isd-tech.com",
+  "website": "https://www.isd-tech.com",
+  "websiteLabel": "isd-tech.com",
+  "photoCutout": "/images/mholmes/photoCutout.jpeg",
+  "address": {
+    "building": "Shield House, Ground Floor",
+    "street": "294 High Street",
+    "city": "Aldershot",
+    "postcode": "GU12 4LT",
+    "country": "United Kingdom"
+  }
+}
