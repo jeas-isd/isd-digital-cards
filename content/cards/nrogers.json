@@ -1,0 +1,20 @@
+{
+  "slug": "nrogers",
+  "firstName": "Neil",
+  "lastName": "Rogers",
+  "fullName": "Neil Rogers",
+  "jobTitle": "Global Operations Director",
+  "company": "Integrated Security Design Ltd",
+  "mobile": "+44 7855 292723",
+  "mobileDial": "+447855292723",
+  "email": "nrogers@isd-tech.com",
+  "website": "https://www.isd-tech.com",
+  "websiteLabel": "isd-tech.com",
+  "address": {
+    "building": "Shield House, Ground Floor",
+    "street": "294 High Street",
+    "city": "Aldershot",
+    "postcode": "GU12 4LT",
+    "country": "United Kingdom"
+  }
+}
