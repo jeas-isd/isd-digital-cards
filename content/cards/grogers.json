@@ -1,0 +1,21 @@
+{
+  "slug": "grogers",
+  "firstName": "Gavin",
+  "lastName": "Rogers",
+  "fullName": "Gavin Rogers",
+  "jobTitle": "Senior Engineer",
+  "company": "Integrated Security Design Ltd",
+  "mobile": "+44 7712 299907",
+  "mobileDial": "+7712299907",
+  "email": "grogers@isd-tech.com",
+  "website": "https://www.isd-tech.com",
+  "websiteLabel": "isd-tech.com",
+  "photoCutout": "/images/grogers/photoCutout.jpg",
+  "address": {
+    "building": "Shield House, Ground Floor",
+    "street": "294 High Street",
+    "city": "Aldershot",
+    "postcode": "GU12 4LT",
+    "country": "United Kingdom"
+  }
+}
