@@ -1,0 +1,20 @@
+{
+  "slug": "pkennedy",
+  "firstName": "Phil",
+  "lastName": "Kennedy",
+  "fullName": "Phil Kennedy",
+  "jobTitle": "Engineer",
+  "company": "Integrated Security Design Ltd",
+  "mobile": "+44 7831 267011",
+  "mobileDial": "+447831267011",
+  "email": "pkennedy@isd-tech.com",
+  "website": "https://www.isd-tech.com",
+  "websiteLabel": "isd-tech.com",
+  "address": {
+    "building": "Shield House, Ground Floor",
+    "street": "294 High Street",
+    "city": "Aldershot",
+    "postcode": "GU12 4LT",
+    "country": "United Kingdom"
+  }
+}
