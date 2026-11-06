@@ -1,0 +1,20 @@
+{
+  "slug": "shastings",
+  "firstName": "Stephen",
+  "lastName": "Hastings",
+  "fullName": "Stephen Hastings",
+  "jobTitle": "Design Engineer",
+  "company": "Integrated Security Design Ltd",
+  "mobile": "+44 1276 409984",
+  "mobileDial": "+441276409984",
+  "email": "sahastings@isd-tech.com",
+  "website": "https://www.isd-tech.com",
+  "websiteLabel": "isd-tech.com",
+  "address": {
+    "building": "Shield House, Ground Floor",
+    "street": "294 High Street",
+    "city": "Aldershot",
+    "postcode": "GU12 4LT",
+    "country": "United Kingdom"
+  }
+}
