@@ -1,0 +1,20 @@
+{
+  "slug": "slowe",
+  "firstName": "Sam",
+  "lastName": "Lowe",
+  "fullName": "Sam Lowe",
+  "jobTitle": "Engineer",
+  "company": "Integrated Security Design Ltd",
+  "mobile": "+44 7350 410295",
+  "mobileDial": "+447350410295",
+  "email": "slowe@isd-tech.com",
+  "website": "https://www.isd-tech.com",
+  "websiteLabel": "isd-tech.com",
+  "address": {
+    "building": "Shield House, Ground Floor",
+    "street": "294 High Street",
+    "city": "Aldershot",
+    "postcode": "GU12 4LT",
+    "country": "United Kingdom"
+  }
+}
